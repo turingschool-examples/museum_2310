@@ -84,6 +84,7 @@ RSpec.describe Museum do
     dmns.admit(patron_3)
     expect(dmns.patrons_by_exhibit_interest).to be_a(Hash)
     expect(dmns.patrons.count).to eq(3)
+
   end
 
   it "has an list of patrons that do not have enough money but are intersted in an exhibit" do
@@ -99,7 +100,12 @@ RSpec.describe Museum do
     patron_1.add_interest("Gems and Minerals")
     patron_2 = Patron.new("Sally", 20)
     patron_2.add_interest("IMAX")
-    expect(dms.ticket_lottery_contestants(imax).to be_a(Array))
+    patron_3 = Patron.new("Johnny", 5)
+    patron_3.add_interest("Dead Sea Scrolls")
+    dmns.admit(patron_1)
+    dmns.admit(patron_2)
+    dmns.admit(patron_3)
+    expect(dmns.ticket_lottery_contestants(imax)).to be_a(Array)
   end
 
   it "can draw a lottery winner" do
