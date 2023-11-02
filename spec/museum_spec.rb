@@ -12,4 +12,11 @@ RSpec.describe Museum do
       expect(@dmns).to be_a(Museum)
     end
   end
+
+  describe '#attributes' do
+    it 'reads and returns attributes' do
+      expect(@dmns.name).to eq("Denver Museum of Nature and Science")
+      expect(@dmns.exhibits).to eq([])
+    end
+  end
 end
