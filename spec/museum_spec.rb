@@ -21,6 +21,12 @@ RSpec.describe Museum do
     expect(dmns.patrons).to be_a(Array)
   end
 
+  it "has a lottery contestants attribute" do
+    dmns = Museum.new("Denver Museum of Nature and Science")
+
+    expect(dmns.lottery_contestants).to be_a(Array)
+  end
+
   it "has an admit method to add patrons" do
     dmns = Museum.new("Denver Museum of Nature and Science")
     patron_1 = Patron.new("Bob", 0)
@@ -121,7 +127,15 @@ RSpec.describe Museum do
     patron_1.add_interest("Gems and Minerals")
     patron_2 = Patron.new("Sally", 20)
     patron_2.add_interest("IMAX")
-    expect(dmns.draw_lottery_winner).to be_a(Stub)
+    patron_3 = Patron.new("Johnny", 5)
+    patron_3.add_interest("Dead Sea Scrolls")
+    patron_4 = Patron.new("Jake", 3)
+    patron_4.add_interest("Dead Sea Scrolls")
+    dmns.admit(patron_1)
+    dmns.admit(patron_2)
+    dmns.admit(patron_3)
+    dmns.admit(patron_4)
+    expect(dmns.draw_lottery_winner).to be_a(String)
   end
 
   it "has a method to announce the lottery winner" do
