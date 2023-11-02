@@ -10,8 +10,8 @@ RSpec.describe Museum do
     @dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
     @imax = Exhibit.new({name: "IMAX",cost: 15})
 
-    patron_1 = Patron.new("Bob", 20)
-    patron_2 = Patron.new("Sally", 20)
+    @patron_1 = Patron.new("Bob", 20)
+    @patron_2 = Patron.new("Sally", 20)
   end
 
   it "exists" do
@@ -27,18 +27,20 @@ RSpec.describe Museum do
     @dmns.add_exhibit(@gems_and_minerals)
     @dmns.add_exhibit(@dead_sea_scrolls)
     @dmns.add_exhibit(@imax)
-
-    expect(@dmns.exhibits).to eq([<Exhibit:0x00007fb400bbcdd8...>, <Exhibit:0x00007fb400b851f8...>, <Exhibit:0x00007fb400acc590...>])
+    expect(@dmns.exhibits).to eq([@gems_and_minerals, @dead_sea_scrolls, @imax])
   end
 
   it "can add patron intrests and make recs" do 
+    @dmns.add_exhibit(@gems_and_minerals)
+    @dmns.add_exhibit(@dead_sea_scrolls)
+    @dmns.add_exhibit(@imax)
+
     @patron_1.add_interest("Dead Sea Scrolls")
     @patron_1.add_interest("Gems and Minerals")
 
     @patron_2.add_interest("IMAX")
-
-    expect(@dmns.recommend_exhibits(@patron_1)).to eq([<Exhibit:0x00007fb400bbcdd8...>, <Exhibit:0x00007fb400b851f8...>])
-    #there shouldn't be a line here but logan empathy means there must be.
-    expect(@dmns.recommend_exhibits(@patron_2)).to eq([<Exhibit:0x00007fb400acc590...>])
+    
+    expect(@dmns.recommend_exhibits(@patron_1)).to eq([@gems_and_minerals, @dead_sea_scrolls ])
+    expect(@dmns.recommend_exhibits(@patron_2)).to eq([@imax])
   end
 end
