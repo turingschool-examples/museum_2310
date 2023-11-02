@@ -20,4 +20,8 @@ class Museum
   def admit(patron)
     @patrons << patron
   end
+
+  def patrons_by_exhibit_interest
+    exhibit_interests = Hash.new 
+  end 
 end
