@@ -48,6 +48,7 @@ class Museum
   end
 
   def draw_lottery_winner
-    
+    winner = @lottery_contestants.sample
+    winner.name
   end
 end

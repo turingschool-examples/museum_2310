@@ -135,6 +135,7 @@ RSpec.describe Museum do
     dmns.admit(patron_2)
     dmns.admit(patron_3)
     dmns.admit(patron_4)
+    dmns.ticket_lottery_contestants(imax)
     expect(dmns.draw_lottery_winner).to be_a(String)
   end
 
