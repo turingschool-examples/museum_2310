@@ -15,6 +15,20 @@ RSpec.describe Museum do
     expect(dmns.name).to eq("Denver Museum of Nature and Science")
   end
 
+  it "has a patrons attribute (folks who've paid)" do
+    dmns = Museum.new("Denver Museum of Nature and Science")
+
+    expect(dmns.patrons).to be_a(Array)
+  end
+
+  it "has an admit method to add patrons" do
+    dmns = Museum.new("Denver Museum of Nature and Science")
+    patron_1 = Patron.new("Bob", 0)
+    dmns.admit(patron_1)
+
+    expect(dmns.patrons.count).to eq(1)
+  end
+
   it "has an attribute for exhibits" do
     dmns = Museum.new("Denver Museum of Nature and Science")
 
@@ -61,8 +75,15 @@ RSpec.describe Museum do
     patron_1.add_interest("Dead Sea Scrolls")
     patron_1.add_interest("Gems and Minerals")
     patron_2 = Patron.new("Sally", 20)
+    patron_2.add_interest("Dead Sea Scrolls")
     patron_2.add_interest("IMAX")
-    expect(dms.patrons_by_exhibit_interest).to be_a(Hash)
+    patron_3 = Patron.new("Johnny", 5)
+    patron_3.add_interest("Dead Sea Scrolls")
+    dmns.admit(patron_1)
+    dmns.admit(patron_2)
+    dmns.admit(patron_3)
+    expect(dmns.patrons_by_exhibit_interest).to be_a(Hash)
+    expect(dmns.patrons.count).to eq(3)
   end
 
   it "has an list of patrons that do not have enough money but are intersted in an exhibit" do
