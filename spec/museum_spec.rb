@@ -179,21 +179,18 @@ RSpec.describe Museum do
       patron_1 = Patron.new("Bob", 0)
       patron_1.add_interest("Dead Sea Scrolls")
       patron_1.add_interest("Gems and Minerals")
-      patron_2 = Patron.new("Sally", 0)
-      patron_2.add_interest("IMAX")
-      dmns.recommend_exhibits(patron_1)
-      dmns.recommend_exhibits(patron_2)
-      patron_3 = Patron.new("Erin", 0)
-      patron_3.add_interest("Gems and Minerals")
-      dmns.recommend_exhibits(patron_3)
+      patron_2 = Patron.new("Sally", 20)
+      patron_2.add_interest("Dead Sea Scrolls")
+      patron_3 = Patron.new("Johnny", 5)
+      patron_3.add_interest("Dead Sea Scrolls")
       dmns.admit(patron_1)
       dmns.admit(patron_2)
       dmns.admit(patron_3)
 
       it 'can announce a random winner from #ticket_lottery_contestants' do
-
+require 'pry'; binding.pry
         expect(dmns.announce_lottery_winner(gems_and_minerals)).to be_a String
-
+        expect(dmns.announce_lottery_winner(gems_and_minerals)).to eq("No winners for this lottery")
       end
     end
 

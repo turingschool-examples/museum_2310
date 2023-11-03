@@ -16,11 +16,13 @@ class Museum
   end
 
   def patrons_by_exhibit_interest
-    patrons_by_exhibit_interest = Hash.new
+    patrons_by_exhibit_interest = Hash.new(nil)
     @exhibits.each do |exhibit|
       @patrons.each do |patron|
         if recommend_exhibits(patron).include?(exhibit.name)
           patrons_by_exhibit_interest.store(exhibit, patron)
+        else
+          patrons_by_exhibit_interest[exhibit]
         end
       end
     end
