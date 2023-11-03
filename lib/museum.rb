@@ -36,7 +36,7 @@ class Museum
 
   def draw_lottery_winner(exhibit)
     if ticket_lottery_contestants(exhibit) == nil
-      false
+      nil
     else
       ticket_lottery_contestants(exhibit).select{|contestant| contestant.interests.include?(exhibit.name)}.sample.name
     end

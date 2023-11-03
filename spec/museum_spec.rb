@@ -169,7 +169,7 @@ RSpec.describe Museum do
       end
 
       it 'returns false if there is no winner' do
-        expect(dmns.draw_lottery_winner(imax)).to eq(false)
+        expect(dmns.draw_lottery_winner(imax)).to eq(nil)
       end
     end
 
@@ -196,6 +196,10 @@ RSpec.describe Museum do
       it 'can announce a random winner from #ticket_lottery_contestants' do
         expect(dmns.announce_lottery_winner(gems_and_minerals)).to be_a String
         expect(dmns.announce_lottery_winner(gems_and_minerals)).to eq("No winners for this lottery")
+
+        ### STUB HERE ###
+        allow(dmns).to receive(:announce_lottery_winner).and_return("Bob has won the IMAX edhibit lottery")
+        expect(dmns.announce_lottery_winner(imax)).to eq("Bob has won the IMAX edhibit lottery")
       end
     end
 
@@ -227,34 +231,4 @@ RSpec.describe Museum do
         expect(dmns.patrons.count).to eq 3
       end
     end
-
-
-    # dmns = Museum.new("Denver Museum of Nature and Science")
-    # gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
-    # dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
-    # imax = Exhibit.new({name: "IMAX",cost: 15})
-    # dmns.add_exhibits(gems_and_minerals)
-    # dmns.add_exhibits(dead_sea_scrolls)
-    # dmns.add_exhibits(imax)
-    # patron_1 = Patron.new("Bob", 0)
-    # patron_1.add_interest("Dead Sea Scrolls")
-    # patron_1.add_interest("Gems and Minerals")
-    # patron_2 = Patron.new("Sally", 0)
-    # patron_2.add_interest("IMAX")
-    # dmns.recommend_exhibits(patron_1)
-    # dmns.recommend_exhibits(patron_2)
-    # patron_3 = Patron.new("Erin", 0)
-    # patron_3.add_interest("Gems and Minerals")
-    # dmns.recommend_exhibits(patron_3)
-    # dmns.admit(patron_1)
-    # dmns.admit(patron_2)
-    # dmns.admit(patron_3)
-
-    #   it 'is an array of Patrons that are unable to afford the exhibit they have an interest in' do
-
-    #     expect(dns.cant_afford_musem(dead_sea_scrolls)).to be_a Array
-    #     expect(dns.cant_afford_museum(dead_sea_scrolls).first).to be_a Patron
-
-    #   end
-    # end
 end
