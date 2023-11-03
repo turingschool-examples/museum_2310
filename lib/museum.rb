@@ -34,7 +34,11 @@ class Museum
     contestants == [] ? nil : contestants
   end
 
-  def draw_lottery_winner
-    ticket_lottery_contestants.sample.name
+  def draw_lottery_winner(exhibit)
+    ticket_lottery_contestants.select{|contestant| contestant.interests.include?(exhibit.name)}.sample.name
+  end
+
+  def announce_lottery_winner
+    puts ""
   end
 end

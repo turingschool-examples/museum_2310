@@ -132,6 +132,7 @@ RSpec.describe Museum do
     end
 
     describe '#draw_lottery_winner' do
+
     dmns = Museum.new("Denver Museum of Nature and Science")
     gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
     dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
@@ -150,12 +151,39 @@ RSpec.describe Museum do
     patron_3.add_interest("Gems and Minerals")
     dmns.recommend_exhibits(patron_3)
 
-      it 'generates a random winner from #ticket_lottery_contestants' do
+      it 'generates a random winner from #ticket_lottery_contestants based on exhibits that they are interested in' do
 
-        expect(dmns.draw_lottery_winner).to be_a String
+        expect(dmns.draw_lottery_winner(gems_and_minerals)).to be_a String
+        expect(dmns.draw_lottery_winner(dead_sea_scrolls)).to eq("Bob")
+        expect(dmns.draw_lottery_winner(imax)).to eq("Sally")
       end
     end
 
-    describe 
+    describe '#announce_lottery_winner' do
+
+    dmns = Museum.new("Denver Museum of Nature and Science")
+    gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
+    dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
+    imax = Exhibit.new({name: "IMAX",cost: 15})
+    dmns.add_exhibits(gems_and_minerals)
+    dmns.add_exhibits(dead_sea_scrolls)
+    dmns.add_exhibits(imax)
+    patron_1 = Patron.new("Bob", 0)
+    patron_1.add_interest("Dead Sea Scrolls")
+    patron_1.add_interest("Gems and Minerals")
+    patron_2 = Patron.new("Sally", 0)
+    patron_2.add_interest("IMAX")
+    dmns.recommend_exhibits(patron_1)
+    dmns.recommend_exhibits(patron_2)
+    patron_3 = Patron.new("Erin", 0)
+    patron_3.add_interest("Gems and Minerals")
+    dmns.recommend_exhibits(patron_3)
+
+      it 'can announce a random winner from #ticket_lottery_contestants' do
+
+        expect(dmns.announce_lottery_winner).to be_a String
+
+      end
+    end
 
 end
