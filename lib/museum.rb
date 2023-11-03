@@ -1,5 +1,5 @@
 class Museum
-  attr_reader :name, :exhibits
+  attr_reader :name, :exhibits, :patrons
 
   def initialize(name)
     @name = name
@@ -12,15 +12,13 @@ class Museum
   end
 
   def recommend_exhibits(patron)
-    @patrons << patron
     patron.interests.select{|interest| @exhibits.each{|exhibit| exhibit == interest}}
   end
 
   def patrons_by_exhibit_interest
     patrons_by_exhibit_interest = Hash.new
-    
     @exhibits.each do |exhibit|
-      @patrons.uniq.each do |patron|
+      @patrons.each do |patron|
         if recommend_exhibits(patron).include?(exhibit.name)
           patrons_by_exhibit_interest.store(exhibit, patron)
         end
@@ -30,7 +28,7 @@ class Museum
   end
 
   def ticket_lottery_contestants
-    contestants = patrons_by_exhibit_interest.values.uniq.select{|patron| patron.spending_money == 0}
+    contestants = patrons_by_exhibit_interest.values.select{|patron| patron.spending_money == 0}
     contestants == [] ? nil : contestants
   end
 
@@ -38,7 +36,11 @@ class Museum
     ticket_lottery_contestants.select{|contestant| contestant.interests.include?(exhibit.name)}.sample.name
   end
 
-  def announce_lottery_winner
-    puts ""
+  def announce_lottery_winner(exhibit)   
+    "#{draw_lottery_winner(exhibit)} has won the #{exhibit.name} exhibit lottery"
+  end
+
+  def admit(patron)
+    @patrons << patron
   end
 end
