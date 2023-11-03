@@ -29,7 +29,12 @@ class Museum
     patrons_by_exhibit_interest
   end
 
-  def exhibit_interests
+  def ticket_lottery_contestants
+    contestants = patrons_by_exhibit_interest.values.uniq.select{|patron| patron.spending_money == 0}
+    contestants == [] ? nil : contestants
+  end
 
+  def draw_lottery_winner
+    ticket_lottery_contestants.sample.name
   end
 end
