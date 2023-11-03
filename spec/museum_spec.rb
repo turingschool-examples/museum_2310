@@ -24,19 +24,19 @@ RSpec.describe Museum do
     end
   end
 
-  describe '#add_exhibits' do
+  describe '#add_exhibit' do
     it 'can add exhibits to @exhibits' do
       dmns = Museum.new("Denver Museum of Nature and Science")
       gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
       dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
       imax = Exhibit.new({name: "IMAX",cost: 15})
 
-      dmns.add_exhibits(gems_and_minerals)
+      dmns.add_exhibit(gems_and_minerals)
 
       expect(dmns.exhibits).to be_a(Array)
 
-      dmns.add_exhibits(dead_sea_scrolls)
-      dmns.add_exhibits(imax)
+      dmns.add_exhibit(dead_sea_scrolls)
+      dmns.add_exhibit(imax)
 
       dmns.exhibits.each do |exhibit|
         expect(exhibit).to be_a(Exhibit)
@@ -74,9 +74,9 @@ RSpec.describe Museum do
       gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
       dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
       imax = Exhibit.new({name: "IMAX",cost: 15})
-      dmns.add_exhibits(gems_and_minerals)
-      dmns.add_exhibits(dead_sea_scrolls)
-      dmns.add_exhibits(imax)
+      dmns.add_exhibit(gems_and_minerals)
+      dmns.add_exhibit(dead_sea_scrolls)
+      dmns.add_exhibit(imax)
       patron_1 = Patron.new("Bob", 20)
       patron_1.add_interest("Dead Sea Scrolls")
       patron_1.add_interest("Gems and Minerals")
@@ -108,9 +108,9 @@ RSpec.describe Museum do
       gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
       dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
       imax = Exhibit.new({name: "IMAX",cost: 15})
-      dmns.add_exhibits(gems_and_minerals)
-      dmns.add_exhibits(dead_sea_scrolls)
-      dmns.add_exhibits(imax)
+      dmns.add_exhibit(gems_and_minerals)
+      dmns.add_exhibit(dead_sea_scrolls)
+      dmns.add_exhibit(imax)
       patron_1 = Patron.new("Bob", 20)
       patron_1.add_interest("Dead Sea Scrolls")
       patron_1.add_interest("Gems and Minerals")
@@ -137,7 +137,7 @@ RSpec.describe Museum do
 
       it 'returns nil if there is no one that cant afford the exhibit' do
         dinosaurs = Exhibit.new({name: "Dinosaurs", cost: 0})
-        dmns.add_exhibits(dinosaurs)
+        dmns.add_exhibit(dinosaurs)
 
         expect(dmns.ticket_lottery_contestants(dinosaurs)).to eq(nil)
       end
@@ -149,9 +149,9 @@ RSpec.describe Museum do
     gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
     dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
     imax = Exhibit.new({name: "IMAX",cost: 15})
-    dmns.add_exhibits(gems_and_minerals)
-    dmns.add_exhibits(dead_sea_scrolls)
-    dmns.add_exhibits(imax)
+    dmns.add_exhibit(gems_and_minerals)
+    dmns.add_exhibit(dead_sea_scrolls)
+    dmns.add_exhibit(imax)
     patron_1 = Patron.new("Bob", 0)
     patron_1.add_interest("Dead Sea Scrolls")
     patron_1.add_interest("Gems and Minerals")
@@ -179,9 +179,9 @@ RSpec.describe Museum do
       gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
       dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
       imax = Exhibit.new({name: "IMAX",cost: 15})
-      dmns.add_exhibits(gems_and_minerals)
-      dmns.add_exhibits(dead_sea_scrolls)
-      dmns.add_exhibits(imax)
+      dmns.add_exhibit(gems_and_minerals)
+      dmns.add_exhibit(dead_sea_scrolls)
+      dmns.add_exhibit(imax)
       patron_1 = Patron.new("Bob", 0)
       patron_1.add_interest("Dead Sea Scrolls")
       patron_1.add_interest("Gems and Minerals")
@@ -209,9 +209,9 @@ RSpec.describe Museum do
         gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
         dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
         imax = Exhibit.new({name: "IMAX",cost: 15})
-        dmns.add_exhibits(gems_and_minerals)
-        dmns.add_exhibits(dead_sea_scrolls)
-        dmns.add_exhibits(imax)
+        dmns.add_exhibit(gems_and_minerals)
+        dmns.add_exhibit(dead_sea_scrolls)
+        dmns.add_exhibit(imax)
         patron_1 = Patron.new("Bob", 0)
         patron_1.add_interest("Dead Sea Scrolls")
         patron_1.add_interest("Gems and Minerals")
