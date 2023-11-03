@@ -29,17 +29,25 @@ class Museum
     patrons_by_exhibit_interest
   end
 
-  def ticket_lottery_contestants
-    contestants = patrons_by_exhibit_interest.values.select{|patron| patron.spending_money == 0}
+  def ticket_lottery_contestants(exhibit)
+    contestants = patrons_by_exhibit_interest.values.select{|patron| patron.interests.include?(exhibit.name) && patron.spending_money <= exhibit.cost}
     contestants == [] ? nil : contestants
   end
 
   def draw_lottery_winner(exhibit)
-    ticket_lottery_contestants.select{|contestant| contestant.interests.include?(exhibit.name)}.sample.name
+    if ticket_lottery_contestants(exhibit) == nil
+      false
+    else
+      ticket_lottery_contestants(exhibit).select{|contestant| contestant.interests.include?(exhibit.name)}.sample.name
+    end
   end
 
-  def announce_lottery_winner(exhibit)   
-    "#{draw_lottery_winner(exhibit)} has won the #{exhibit.name} exhibit lottery"
+  def announce_lottery_winner(exhibit)
+    if ticket_lottery_contestants(exhibit) == nil
+      "No winners for this lottery"
+    else
+      "#{draw_lottery_winner(exhibit)} has won the #{exhibit.name} edhibit lottery"
+    end
   end
 
   def admit(patron)

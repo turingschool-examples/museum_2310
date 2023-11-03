@@ -123,47 +123,53 @@ RSpec.describe Museum do
 
       it 'returns an array of patrons that do not have enough money to see an exhibit but are interested in an exhibit' do
 
-        expect(dmns.ticket_lottery_contestants).to eq(nil)
+        expect(dmns.ticket_lottery_contestants(gems_and_minerals)).to eq(nil)
 
         patron_3 = Patron.new("Erin", 0)
         patron_3.add_interest("Gems and Minerals")
         dmns.recommend_exhibits(patron_3)        
         dmns.admit(patron_3)
 
-        expect(dmns.ticket_lottery_contestants).to be_a Array
-        expect(dmns.ticket_lottery_contestants.first).to be_a Patron
-        expect(dmns.ticket_lottery_contestants.first.name).to eq("Erin")
+        expect(dmns.ticket_lottery_contestants(gems_and_minerals)).to be_a Array
+        expect(dmns.ticket_lottery_contestants(gems_and_minerals).first).to be_a Patron
+        expect(dmns.ticket_lottery_contestants(gems_and_minerals).first.name).to eq("Erin")
+      end
+
+      it 'returns nil if there is no one that cant afford the exhibit' do
+        dinosaurs = Exhibit.new({name: "Dinosaurs", cost: 0})
+        dmns.add_exhibits(dinosaurs)
+
+        expect(dmns.ticket_lottery_contestants(dinosaurs)).to eq(nil)
       end
     end
 
     describe '#draw_lottery_winner' do
 
-      dmns = Museum.new("Denver Museum of Nature and Science")
-      gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
-      dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
-      imax = Exhibit.new({name: "IMAX",cost: 15})
-      dmns.add_exhibits(gems_and_minerals)
-      dmns.add_exhibits(dead_sea_scrolls)
-      dmns.add_exhibits(imax)
-      patron_1 = Patron.new("Bob", 0)
-      patron_1.add_interest("Dead Sea Scrolls")
-      patron_1.add_interest("Gems and Minerals")
-      patron_2 = Patron.new("Sally", 0)
-      patron_2.add_interest("IMAX")
-      dmns.recommend_exhibits(patron_1)
-      dmns.recommend_exhibits(patron_2)
-      patron_3 = Patron.new("Erin", 0)
-      patron_3.add_interest("Gems and Minerals")
-      dmns.recommend_exhibits(patron_3)
-      dmns.admit(patron_1)
-      dmns.admit(patron_2)
-      dmns.admit(patron_3)
+    dmns = Museum.new("Denver Museum of Nature and Science")
+    gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
+    dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
+    imax = Exhibit.new({name: "IMAX",cost: 15})
+    dmns.add_exhibits(gems_and_minerals)
+    dmns.add_exhibits(dead_sea_scrolls)
+    dmns.add_exhibits(imax)
+    patron_1 = Patron.new("Bob", 0)
+    patron_1.add_interest("Dead Sea Scrolls")
+    patron_1.add_interest("Gems and Minerals")
+    patron_2 = Patron.new("Sally", 20)
+    patron_2.add_interest("Dead Sea Scrolls")
+    patron_3 = Patron.new("Johnny", 5)
+    patron_3.add_interest("Dead Sea Scrolls")
+    dmns.admit(patron_1)
+    dmns.admit(patron_2)
+    dmns.admit(patron_3)
 
       it 'generates a random winner from #ticket_lottery_contestants based on exhibits that they are interested in' do
 
-        expect(dmns.draw_lottery_winner(gems_and_minerals)).to be_a String
-        expect(dmns.draw_lottery_winner(dead_sea_scrolls)).to eq("Bob")
-        expect(dmns.draw_lottery_winner(imax)).to eq("Sally")
+        expect(dmns.draw_lottery_winner(dead_sea_scrolls)).to be_a String
+      end
+
+      it 'returns false if there is no winner' do
+        expect(dmns.draw_lottery_winner(imax)).to eq(false)
       end
     end
 
@@ -188,7 +194,6 @@ RSpec.describe Museum do
       dmns.admit(patron_3)
 
       it 'can announce a random winner from #ticket_lottery_contestants' do
-require 'pry'; binding.pry
         expect(dmns.announce_lottery_winner(gems_and_minerals)).to be_a String
         expect(dmns.announce_lottery_winner(gems_and_minerals)).to eq("No winners for this lottery")
       end
@@ -222,4 +227,34 @@ require 'pry'; binding.pry
         expect(dmns.patrons.count).to eq 3
       end
     end
+
+
+    # dmns = Museum.new("Denver Museum of Nature and Science")
+    # gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
+    # dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
+    # imax = Exhibit.new({name: "IMAX",cost: 15})
+    # dmns.add_exhibits(gems_and_minerals)
+    # dmns.add_exhibits(dead_sea_scrolls)
+    # dmns.add_exhibits(imax)
+    # patron_1 = Patron.new("Bob", 0)
+    # patron_1.add_interest("Dead Sea Scrolls")
+    # patron_1.add_interest("Gems and Minerals")
+    # patron_2 = Patron.new("Sally", 0)
+    # patron_2.add_interest("IMAX")
+    # dmns.recommend_exhibits(patron_1)
+    # dmns.recommend_exhibits(patron_2)
+    # patron_3 = Patron.new("Erin", 0)
+    # patron_3.add_interest("Gems and Minerals")
+    # dmns.recommend_exhibits(patron_3)
+    # dmns.admit(patron_1)
+    # dmns.admit(patron_2)
+    # dmns.admit(patron_3)
+
+    #   it 'is an array of Patrons that are unable to afford the exhibit they have an interest in' do
+
+    #     expect(dns.cant_afford_musem(dead_sea_scrolls)).to be_a Array
+    #     expect(dns.cant_afford_museum(dead_sea_scrolls).first).to be_a Patron
+
+    #   end
+    # end
 end
