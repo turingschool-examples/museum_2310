@@ -55,13 +55,14 @@ RSpec.describe Museum do
         patron_1.add_interest("Gems and Minerals")
         patron_2 = Patron.new("Sally", 20)
         patron_2.add_interest("IMAX")
-
+        
+        require 'pry'; binding.pry
         expect(dmns.recommend_exhibits(patron_1)).to be_a(Array)
         expect(dmns.recommend_exhibits(patron_1).count).to eq(2)
 
         exhibit_names = []
         dmns.recommend_exhibits(patron_1).each do |exhibit| 
-          exhibit_names << exhibit
+          exhibit_names << exhibit.name
         end
 
         expect(exhibit_names).to eq(["Dead Sea Scrolls", "Gems and Minerals"])

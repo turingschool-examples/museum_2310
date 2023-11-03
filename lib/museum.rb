@@ -12,7 +12,14 @@ class Museum
   end
 
   def recommend_exhibits(patron)
-    patron.interests.select{|interest| @exhibits.each{|exhibit| exhibit == interest}}
+    recommended_exhibits = []
+    patron.interests.each do |interest|
+      @exhibits.each do |exhibit|
+      recommended_exhibits << exhibit if exhibit.name == interest
+      end
+    end
+    ######## Why isn't this working? #########
+    recommended_exhibits
   end
 
   def patrons_by_exhibit_interest
