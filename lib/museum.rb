@@ -30,7 +30,7 @@ class Museum
   end
 
   def ticket_lottery_contestants(exhibit)
-    contestants = patrons_by_exhibit_interest.values.select{|patron| patron.interests.include?(exhibit.name) && patron.spending_money <= exhibit.cost}
+    contestants = patrons_by_exhibit_interest.values.select{|patron| patron.interests.include?(exhibit.name) && patron.spending_money < exhibit.cost}
     contestants == [] ? nil : contestants
   end
 

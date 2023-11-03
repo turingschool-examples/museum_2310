@@ -126,13 +126,13 @@ RSpec.describe Museum do
         expect(dmns.ticket_lottery_contestants(gems_and_minerals)).to eq(nil)
 
         patron_3 = Patron.new("Erin", 0)
-        patron_3.add_interest("Gems and Minerals")
+        patron_3.add_interest("Dead Sea Scrolls")
         dmns.recommend_exhibits(patron_3)        
         dmns.admit(patron_3)
 
-        expect(dmns.ticket_lottery_contestants(gems_and_minerals)).to be_a Array
-        expect(dmns.ticket_lottery_contestants(gems_and_minerals).first).to be_a Patron
-        expect(dmns.ticket_lottery_contestants(gems_and_minerals).first.name).to eq("Erin")
+        expect(dmns.ticket_lottery_contestants(dead_sea_scrolls)).to be_a Array
+        expect(dmns.ticket_lottery_contestants(dead_sea_scrolls).first).to be_a Patron
+        expect(dmns.ticket_lottery_contestants(dead_sea_scrolls).first.name).to eq("Erin")
       end
 
       it 'returns nil if there is no one that cant afford the exhibit' do
